@@ -18,9 +18,8 @@ class Library(models.Model):
         return self.name
     
 class Librarian(models.Model):
-    name = models.Charfield(max_length = 100)
+    name = models.CharField(max_length = 100)
     library = models.OneToOneField(Library, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.name} {self.library.name}"
-    
     
