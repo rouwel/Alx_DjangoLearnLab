@@ -7,6 +7,9 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.shortcuts import render, redirect
+
+
 
 # Create your views here.
 
@@ -37,3 +40,14 @@ class UserRegisterView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
