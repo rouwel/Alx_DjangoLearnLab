@@ -31,7 +31,7 @@ class UserLogoutView(LogoutView):
 
 class UserRegisterView(FormView):
     template_name = "relationship_app/register.html"
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
     success_url = reverse_lazy("login")
 
     def form_valid(self, form):
