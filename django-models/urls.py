@@ -3,11 +3,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('relationship_app.urls')),
-]
-
-from django.urls import path, include
-
-urlpatterns = [
-    path("", include("relationship_app.urls")),
+    path('Django-models/', include('relationship_app.urls')),
 ]
