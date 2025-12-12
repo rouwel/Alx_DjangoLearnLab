@@ -1,11 +1,13 @@
+from django.urls import path
 from .views import list_books
 from .views import Library_Detail
-from django.urls import path
+import relationship_app.views as view
+
 
 urlpatterns = [
     path("books/", list_books, name = "list-books")
 ]
 
 urlpatterns = [
-    path("Library/", Library_Detail.as_view, name = "This Library")
+    path("Library/<int:pk>/", Library_Detail.as_view(template_name = "library_detail.html"), name = "This Library")
 ]
