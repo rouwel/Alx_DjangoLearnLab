@@ -1,11 +1,10 @@
 from django.contrib import admin
 
 # Register your models here
+
+
 from .models import Book
 admin.site.register(Book)
-
-from django.contrib import admin
-from .models import Book
 
 class BookAdmin(admin.ModelAdmin):
     # Show these fields in the list view
@@ -17,6 +16,4 @@ class BookAdmin(admin.ModelAdmin):
     # Enable search by title and author
     search_fields = ('title', 'author')
 
-# Register with custom admin configuration
-admin.site.register(Book, BookAdmin)
 
