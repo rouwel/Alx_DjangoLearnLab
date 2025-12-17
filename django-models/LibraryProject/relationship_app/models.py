@@ -1,6 +1,9 @@
 from django.db import models
 # Create your models here.
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver 
+
 
 
 class Author(models.Model):
@@ -25,19 +28,27 @@ class Librarian(models.Model):
     library = models.OneToOneField(Library, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.name} {self.library.name}"
-    
+     
+
 
 class UserProfile(models.Model):
-    ROLE_CHOICES = [
-        ('Admin','Admin'),
-        ('Librarian','Librarian'),
-        ('Member','Member'),
-    ]
+    ROLE_CHOICES = (
+        ('admin', 'Administrator'),
+        ('librarian', 'Librarian'),
+        ('member', 'Member'),
+    )
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
-    role = models.CharField(max_length= 20, choices = ROLE_CHOICES )
     def __str__(self):
-        return f"{self.user.username} - {self.role}"
+        return f"{self.user.username} - {self.get_role_display()}"
 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:  # Only run when a new User is created
+        UserProfile.objects.create(user=instance, role='member')
 
-
+@receiver(post_save, sender=User) 
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()

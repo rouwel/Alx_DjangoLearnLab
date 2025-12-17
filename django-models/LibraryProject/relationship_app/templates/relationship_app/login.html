@@ -7,8 +7,7 @@
   <form method="post">{% csrf_token %} {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
-  <a href="{% url 'register' %}">Register</a>
-{% extends "base.html" %}
+  <a href="{% url 'create' %}">Register</a>
 {% block content %}
   <h2>Login</h2>
   <form method="post">
