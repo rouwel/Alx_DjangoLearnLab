@@ -29,7 +29,7 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, username, email, date_of_birth = None, profile_photo = None):
         extra_fields.setdefault('is_staff', True) 
         extra_fields.setdefault('is_superuser', True) 
-        return self.create_user(username, email, password=password,)
+        return self.create_user(username, email, password=password)
         
 
         
