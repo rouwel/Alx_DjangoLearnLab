@@ -2,7 +2,7 @@ from django.contrib import admin
 # Register your models here
 from .models import Book
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import customuser
 
 
 
@@ -19,7 +19,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(UserAdmin):
-    model = CustomUser
+    model = customuser
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': ('date_of_birth', 'profile_photo')}),
     )
@@ -27,4 +27,4 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('date_of_birth', 'profile_photo')}),
     )
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(customuser, CustomUserAdmin)

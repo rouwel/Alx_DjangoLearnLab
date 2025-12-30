@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
 # Create your models here.
 
 class Book(models.Model):
@@ -8,8 +9,8 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
 
-    class Meta:
-        permission = [
+    class Meta():
+        permissions = [
             ("can_view", "Can view books"),
             ("can_create", "Can create books"),
             ("can_edit", "Can edit books"),
@@ -20,15 +21,14 @@ class Book(models.Model):
         return f"{self.title} by {self.author}"
 
 
-class CustomUser(AbstractUser):
+class customuser(AbstractUser):
     date_of_birth = models.DateField(null = True, blank =True)
-    profile_photo = models.ImageField(upload_to= 'profile_photos/', null = True, blank = True)
     
     def __str__(self):
         return f"{self.profile_photo}"
     
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, date_of_birth = None, profile_photo = None):
+    def create_user(self, username, email, date_of_birth = None, profile_photo = False):
         user = self.model(username = username, email = email, date_of_birth = date_of_birth, profile_photo = profile_photo)
         user.set_password(password)
         user.save(using=self._db)
@@ -40,10 +40,10 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password=password)
         
 
-        
 
 
-
+class UserProfile(models.Model): 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "bookshelf_profile")
 
     
 
