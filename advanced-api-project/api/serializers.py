@@ -17,6 +17,7 @@ class BookSerializer(serializers.ModelSerializer):  #This serializer converts al
 
 
 class AuthorSerializer(serializers.ModelSerializer):  #This serializer connects the tables books and authors using a one to many relationship.
+    (many = True, read_only = True)
     books = BookSerializer(many = True, read_only = True)
     class Meta:
         model = Book
