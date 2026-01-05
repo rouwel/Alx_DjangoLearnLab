@@ -16,7 +16,7 @@ class DetailView(generics.RetrieveAPIViewAPIView): #View used to retrieve one sp
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-class CreateView(generics.CreateAPIView): #View used to create a book instance. It provides a message that shows the userthat the book instance has been created successfully.
+class CreateView(generics.CreateAPIView): #View used to create a book instance. It provides a message that shows the user that the book instance has been created successfully.
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
