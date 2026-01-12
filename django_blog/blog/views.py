@@ -1,23 +1,37 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
+from .forms import UserCreateForm, UserUpdaterForm
 
 
 # Create your views here.
 
 def register(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("profile")
+            return redirect("login")
     else:
-        form = CustomUserCreationForm()
+        form = UserCreateForm()
     return render(request, "blog/register.html", {"form": form})
+
 
 @login_required
 def profile(request):
-    return render(request, "blog/profile.html")
+    if request.method == 'POST':
+        L_form = UserUpdaterForm(request.POST, instance=request.user)
+        if L_form.is_valid():
+            L_form.save()
+            return redirect('profile')
+    else:
+        L_form_form = UserUpdaterForm(instance=request.user)
+
+    return render(request, 'blog/profile.html', {'L_form': L_form})
+
+
+
+
+
 
